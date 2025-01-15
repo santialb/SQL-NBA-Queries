@@ -1361,3 +1361,18 @@ INSERT INTO players(Player,Team,Conference,Date,Position,Height,Weight,Age,Draft
 INSERT INTO players(Player,Team,Conference,Date,Position,Height,Weight,Age,Draft_Year,Seasons_in_league,Season,Season_short,Predraft_Team,Real_value,Height_CM,Weight_KG,Last_Season) VALUES ('Marques Johnson','Milwaukee Bucks',NULL,'Nov 4, 1979','GF','6''7',218,24,1977,2,'1979-1980',1980,'UCLA',1.0,201,98,0);
 INSERT INTO players(Player,Team,Conference,Date,Position,Height,Weight,Age,Draft_Year,Seasons_in_league,Season,Season_short,Predraft_Team,Real_value,Height_CM,Weight_KG,Last_Season) VALUES ('Micheal Ray Richardson','New York Knicks',NULL,'Oct 28, 1979','PG','6''5',189,24,1978,1,'1979-1980',1980,'Montana',1.0,196,85,0);
 INSERT INTO players(Player,Team,Conference,Date,Position,Height,Weight,Age,Draft_Year,Seasons_in_league,Season,Season_short,Predraft_Team,Real_value,Height_CM,Weight_KG,Last_Season) VALUES ('Julius Erving','Philadelphia Sixers',NULL,'Oct 21, 1979','SF','6''6',200,30,1972,7,'1979-1980',1980,'Massachusetts',1.0,198,90,0);
+/*Get the average age, maximum age and minumum age of the NBA league */
+SELECT ROUND(AVG(age)) as average_age, MAX(age) AS maximum_age, MIN(age) AS minimum_age FROM players;
+/*Get the teams who the sum of their height higher than 10000cm */
+SELECT team, SUM(height_cm) as total_team_height FROM players GROUP BY team HAVING total_team_height > 10000;
+/*Get how many players are considered old (age > 30) prime (age >= 27)  or young (age < 27)*/
+SELECT COUNT(*), CASE
+WHEN age > 30 THEN 'Old Player'
+WHEN age >= 27 THEN 'Prime Player'
+ELSE 'Young Player'
+END AS players_age_range
+FROM players GROUP BY players_age_range;
+/*Get the players who were drafted after 2015 and play as a PG or SF  (Display name, position, team, age, height, weight and position)*/
+SELECT player, team, age, height, weight, position FROM players
+WHERE draft_year > 2015 and position IN ('PG', 'SF')
+GROUP BY player;
